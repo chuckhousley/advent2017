@@ -20,7 +20,7 @@ defmodule Advent2017.Day1 do
     "./captcha.txt"
     |> Path.expand(__DIR__)
     |> File.read!()
-    |> String.replace("\n", "")
+    |> String.trim_trailing
     |> String.split(~r//, trim: true)
   end
 
