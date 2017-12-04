@@ -2,6 +2,11 @@
 
 Advent of Code 2017 solutions
 
+Day 1: 2/2 stars
+Day 2: 2/2 stars
+Day 3: 2/2 stars (used calculator + OEIS (thanks reddit))
+Day 4: 2/2 stars
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
