@@ -12,7 +12,8 @@ defmodule Advent2017.Day5 do
     |> String.split(~r/\n/, trim: true)
     |> Enum.map(&(String.to_integer &1))
     |> Enum.with_index
-    |> Enum.reduce(%{}, fn({jmp, idx}, map) -> Map.put(map, idx, jmp) end)
+    |> Enum.map(fn({k, v}) -> {v, k} end)
+    |> Map.new
   end
 
   def loop(inst, idx, acc) do
