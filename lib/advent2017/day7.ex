@@ -71,14 +71,14 @@ defmodule Advent2017.Day7 do
   def tree_weight(_input, %Node{support: [], weight: w}), do: w
 
   # is supporting programs
-  def tree_weight(input, %Node{support: s, weight: w} = node) do
+  def tree_weight(input, %Node{support: s, weight: node_weight}) do
     above_weight = Enum.filter(input, fn(%{name: name}) -> 
       Enum.any?(s, fn(x) -> x == name end) 
     end)
     |> Enum.map(fn(x) -> {Map.get(x, :name), tree_weight(input, x)} end)
     |> check_unbalanced
     |> Enum.reduce(0, fn({_k, v}, acc) -> v + acc end) 
-    above_weight + Map.get(node, :weight)
+    above_weight + node_weight
   end
 
   def check_unbalanced(layer) do
