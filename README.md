@@ -20,6 +20,8 @@ Day 8: 2/2 stars
 
 Day 9: 2/2 stars
 
+Day 10: 2/2 stars
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
