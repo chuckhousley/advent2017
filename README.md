@@ -27,3 +27,7 @@ Day 11: 2/2 stars
 Day 12: 2/2 stars
 
 Day 13: 2/2 stars
+
+Day 14 1/2 stars (aaaaaahhhhhhh)
+
+Day 15 2/2 stars
