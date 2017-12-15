@@ -42,24 +42,29 @@ defmodule Advent2017.Day10 do
   # ---- part 2 ---- #
   
   def start2() do
-    lengths = get_file() |> split_ascii
-    process2(Enum.to_list(0..255), lengths, 0, 0)
-    |> dense_hash
-    |> knot_hash
+    get_file() 
+    |> split_ascii
+    |> make_knot_hash
   end
 
   def split_ascii(input) do
     input |> to_charlist |> Enum.concat([17, 31, 73, 47, 23])
   end
 
-  def process2(numbers, lengths, skip, 64) do
+  def make_knot_hash(sequence) do
+    sparse_hash(Enum.to_list(0..255), sequence, 0, 0)
+    |> dense_hash
+    |> knot_hash
+  end
+
+  def sparse_hash(numbers, lengths, skip, 64) do
     return = calculate_return(numbers, lengths, skip-1, 64)
     rotate(numbers, return)
   end
 
-  def process2(numbers, lengths, skip, iter) do
+  def sparse_hash(numbers, lengths, skip, iter) do
     {numbers, skip} = loop(numbers, lengths, skip)
-    process2(numbers, lengths, skip+1, iter+1)
+    sparse_hash(numbers, lengths, skip+1, iter+1)
   end
 
   def dense_hash(sparse_hash) do
