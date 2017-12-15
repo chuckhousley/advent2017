@@ -2,9 +2,9 @@ defmodule Advent2017.Day15 do
   def start() do
     a = 722
     b = 354
-    ta = 65
-    tb = 8921
-    loop(ta, tb, 0, 0)
+    #ta = 65
+    #tb = 8921
+    loop(a, b, 0, 0)
   end
 
   #def loop(_, _, acc, 40000000), do: acc
