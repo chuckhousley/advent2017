@@ -39,9 +39,10 @@ defmodule Advent2017.Day16 do
   end
 
   def dance_lots(instruction, dancers, iter\\0)
-  def dance_lots(_, dancers, 1000000000), do: dancers
+  def dance_lots(_, dancers, 60), do: dancers
   def dance_lots(instruction, dancers, iter) do
     dancers = dance(instruction, dancers)
+    IO.puts "#{iter+1}: #{Map.values(dancers)}"
     dance_lots(instruction, dancers, iter+1)
   end
 
