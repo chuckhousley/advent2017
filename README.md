@@ -32,4 +32,4 @@ Day 14: 2/2 stars (after a rewrite)
 
 Day 15: 2/2 stars
 
-Day 16: 1/2 stars (but it's still running)
+Day 16: 2/2 stars (bruteforce would have took ~4 years, glad I didn't go to bed after I started that)
