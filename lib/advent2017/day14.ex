@@ -1,9 +1,11 @@
 defmodule Advent2017.Day14 do
   alias Advent2017.Day10, as: KN
   alias String, as: S
-  def start() do
-    #test_input = "flqrgnkx"
-    input = "hfdlxzhv"
+  def start(which\\:aoc) do
+    input = case which do
+      :test -> "flqrgnkx" # 8108
+      :aoc -> "hfdlxzhv"  # 8230
+    end
     make_hash_map(input)
     |> make_binary_grid
     |> calc_used
@@ -14,7 +16,7 @@ defmodule Advent2017.Day14 do
     make_hash_map(input)
     |> make_binary_grid
     |> calc_groups
-    # 1106 too high
+    |> loop
   end
 
   def make_hash_map(input) do
@@ -42,44 +44,46 @@ defmodule Advent2017.Day14 do
     binary_grid
     |> List.flatten
     |> Enum.with_index
-    |> Map.new(fn {y, x} -> {x, y} end)
+    |> Map.new(fn {y, x} -> {{div(x, 128), rem(x, 128)}, y} end)
   end
 
+  def loop(map, v\\0, acc\\0)
+  def loop(map, _, acc) when map == %{}, do: acc
   def loop(map, v, acc) do
-    case Map.get(map, v) do
-      nil -> acc
-      val -> loop(dfs(map,v), v+1, acc + val)
+    coords = {div(v, 128), rem(v, 128)}
+    case Map.has_key?(map, coords) do
+      true -> 
+        acc = acc + Map.get(map, coords)
+        loop(dfs(map,coords), v+1, acc)
+      false -> loop(dfs(map,coords), v+1, acc)
     end
   end
 
   def dfs(map, v) do
-    check(Map.get_and_update(map, v, fn node -> {node, 0} end), v)
+    check(Map.pop(map, v, nil), v)
   end
 
-  def check({1, map}, v) do 
+  def check({1, map}, {x, y} = v) do 
     cond do
-      v == 0 ->
-        map |> dfs(v+1) |> dfs(v+128) 
-      v == 127 ->
-        map |> dfs(v-1) |> dfs(v+128)
-      v == 16256 ->
-        map |> dfs(v+1) |> dfs(v-128) 
-      v == 16383 ->
-        map |> dfs(v-1) |> dfs(v-128) 
-      v < 127 ->
-        map |> dfs(v-1) |> dfs(v+1) |> dfs(v+128)
-      v > 16256 ->
-        map |> dfs(v-1) |> dfs(v-128) |> dfs(v+1)
-      rem(v, 127) == 0 ->
-        map |> dfs(v-1) |> dfs(v-128) |> dfs(v+128)
-      rem(v, 128) == 0 ->
-        map |> dfs(v+1) |> dfs(v-128) |> dfs(v+128)
+      x == 0 ->
+        map |> up(v) |> down(v) |> right(v)
+      y == 0 ->
+        map |> left(v) |> right(v) |> down(v)
+      x == 127 ->
+        map |> up(v) |> down(v) |> left(v)
+      y == 127 ->
+        map |> left(v) |> right(v) |> up(v)
       true ->
-        map |> dfs(v-1) |> dfs(v-128) |> dfs(v+1) |> dfs(v+128)
+        map |> left(v) |> up(v) |> right(v) |> down(v)
     end
   end
 
   def check({_, map}, _), do: map
+
+  def left(map, {x, y}),  do: dfs(map, {x-1, y})
+  def right(map, {x, y}), do: dfs(map, {x+1, y})
+  def up(map, {x, y}),    do: dfs(map, {x, y-1})
+  def down(map, {x, y}),  do: dfs(map, {x, y+1})
 
   def hex_bytes(hex) when length(hex) < 4, do: hex_bytes([0] ++ hex)
   def hex_bytes(hex), do: hex
