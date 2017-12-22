@@ -35,3 +35,7 @@ Day 15: 2/2 stars
 Day 16: 2/2 stars (bruteforce would have took ~4 years, glad I didn't go to bed after I started that)
 
 Day 17: 2/2 stars
+
+Day 18: 1/2 stars
+
+Day 19: 2/2 stars
