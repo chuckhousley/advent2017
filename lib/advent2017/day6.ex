@@ -2,8 +2,7 @@ defmodule Advent2017.Day6 do
   def start() do
     input = get_file()
     # input = Map.new([{0, 0}, {1, 2}, {2, 7}, {3, 0}])
-    history = MapSet.new()
-    find_infinite_loop(input, history)
+    find_infinite_loop(input)
   end
 
   def get_file() do
@@ -24,7 +23,7 @@ defmodule Advent2017.Day6 do
     |> redistribute(idx + 1, blocks)
   end
 
-  def find_infinite_loop(memory, history) do
+  def find_infinite_loop(memory, history\\%MapSet{}) do
     step(memory)
     |> check(history)
   end
@@ -44,8 +43,12 @@ defmodule Advent2017.Day6 do
     case MapSet.member?(history, memory) do
       # part 1
       # true  -> MapSet.size(history) + 1
-      # part 2
-      true  -> find_chosen_one(step(memory), memory, 1)
+      # part 1 and 2
+      true  -> 
+        {
+          MapSet.size(history) + 1, 
+          find_chosen_one(step(memory), memory, 1)
+        }
       false ->
         history = MapSet.put(history, memory)
         find_infinite_loop(memory, history)
